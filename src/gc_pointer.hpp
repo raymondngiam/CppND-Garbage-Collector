@@ -7,7 +7,7 @@ bool Pointer<T, size>::first = true;
 
 // Constructor for both initialized and uninitialized objects. -> see class interface
 template<class T,int size>
-Pointer<T,size>::Pointer(T *t){
+Pointer<T,size>::Pointer(T* t){
     // Register shutdown() as an exit function.
     if (first)
         atexit(shutdown);
@@ -24,7 +24,7 @@ Pointer<T,size>::Pointer(T *t){
 }
 // Copy constructor.
 template< class T, int size>
-Pointer<T,size>::Pointer(const Pointer &ob){
+Pointer<T,size>::Pointer(const Pointer& ob){
 
     // TODO: Implement Pointer constructor
     // Lab: Smart Pointer Project Lab
@@ -45,7 +45,7 @@ Pointer<T, size>::~Pointer(){
     
     // TODO: Implement Pointer destructor
     // Lab: New and Delete Project Lab
-    typename std::list<PtrDetails<T> >::iterator p;
+    typename std::list<PtrDetails<T>>::iterator p;
     p = findPtrInfo(addr);
     if (p->refcount)
         p->refcount--; 
@@ -65,13 +65,13 @@ bool Pointer<T, size>::collect(){
     // TODO: Implement collect function
     // LAB: New and Delete Project Lab
     // Note: collect() will be called in the destructor
-     bool memfreed = false;
+    bool memfreed = false;
     typename std::list<PtrDetails<T> >::iterator p;
     do{
         // Scan refContainer looking for unreferenced pointers.
         for (p = refContainer.begin(); p != refContainer.end(); p++){
             // If in-use, skip.
-            if (p->refcount > 0)
+            if (p->refcount> 0)
                 continue;
             memfreed = true;
             // Remove unused entry from refContainer.
@@ -95,11 +95,11 @@ bool Pointer<T, size>::collect(){
 
 // Overload assignment of pointer to Pointer.
 template <class T, int size>
-T *Pointer<T, size>::operator=(T *t){
+T* Pointer<T, size>::operator=(T* t){
 
     // TODO: Implement operator==
     // LAB: Smart Pointer Project Lab
-     auto p = findPtrInfo(this->addr);
+    auto p = findPtrInfo(this->addr);
     --p->refcount;
 
     p =findPtrInfo(t);
@@ -117,7 +117,7 @@ T *Pointer<T, size>::operator=(T *t){
 }
 // Overload assignment of Pointer to Pointer.
 template <class T, int size>
-Pointer<T, size> &Pointer<T, size>::operator=(Pointer &rv){
+Pointer<T, size>& Pointer<T, size>::operator=(Pointer& rv){
 
     // TODO: Implement operator==
     // LAB: Smart Pointer Project Lab

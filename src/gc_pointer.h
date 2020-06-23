@@ -17,10 +17,10 @@ template <class T, int size = 0>
 class Pointer{
 private:
     // refContainer maintains the garbage collection list.
-    static std::list<PtrDetails<T> > refContainer;
+    static std::list<PtrDetails<T>> refContainer;
     // addr points to the allocated memory to which
     // this Pointer pointer currently points.
-    T *addr;
+    T* addr;
     /*  isArray is true if this Pointer points
         to an allocated array. It is false
         otherwise. 
@@ -32,7 +32,7 @@ private:
     unsigned arraySize; // size of the array
     static bool first; // true when first Pointer is created
     // Return an iterator to pointer details in refContainer.
-    typename std::list<PtrDetails<T> >::iterator findPtrInfo(T *ptr);
+    typename std::list<PtrDetails<T>>::iterator findPtrInfo(T* ptr);
 public:
     // Define an iterator type for Pointer<T>.
     typedef Iter<T> GCiterator;
@@ -44,28 +44,28 @@ public:
     }
     Pointer(T*);
     // Copy constructor.
-    Pointer(const Pointer &);
+    Pointer(const Pointer&);
     // Destructor for Pointer.
     ~Pointer();
     // Collect garbage. Returns true if at least
     // one object was freed.
     static bool collect();
     // Overload assignment of pointer to Pointer.
-    T *operator=(T *t);
+    T* operator=(T* t);
     // Overload assignment of Pointer to Pointer.
-    Pointer &operator=(Pointer &rv);
+    Pointer& operator=(Pointer& rv);
     // Return a reference to the object pointed
     // to by this Pointer.
-    T &operator*(){
+    T& operator*(){
         return *addr;
     }
     // Return the address being pointed to.
-    T *operator->() { return addr; }
+    T* operator->() { return addr; }
     // Return a reference to the object at the
     // index specified by i.
-    T &operator[](int i){ return addr[i];}
+    T& operator[](int i){ return addr[i];}
     // Conversion function to T *.
-    operator T *() { return addr; }
+    operator T*() { return addr; }
     // Return an Iter to the start of the allocated memory.
     Iter<T> begin(){
         int _size;
