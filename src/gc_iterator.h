@@ -27,112 +27,55 @@ class Iter
     T *begin;        // points to start of allocated array
     unsigned length; // length of sequence
   public:
-    Iter()
-    {
-        ptr = end = begin = NULL;
-        length = 0;
-    }
-    Iter(T *p, T *first, T *last)
-    {
-        ptr = p;
-        end = last;
-        begin = first;
-        length = last - first;
-    }
+    // ctor
+    Iter();
+    Iter(T *p, T *first, T *last);
+
     // Return length of sequence to which this
     // Iter points.
-    unsigned size() { return length; }
+    unsigned size();
+
     // Return value pointed to by ptr.
     // Do not allow out-of-bounds access.
-    T &operator*()
-    {
-        if ((ptr >= end) || (ptr < begin))
-            throw OutOfRangeExc();
-        return *ptr;
-    }
+    T &operator*();
+
     // Return address contained in ptr.
     // Do not allow out-of-bounds access.
-    T *operator->()
-    {
-        if ((ptr >= end) || (ptr < begin))
-            throw OutOfRangeExc();
-        return ptr;
-    }
+    T *operator->();
+
     // Prefix ++.
-    Iter operator++()
-    {
-        ptr++;
-        return *this;
-    }
+    Iter operator++();
+
     // Prefix --.
-    Iter operator--()
-    {
-        ptr--;
-        return *this;
-    }
+    Iter operator--();
+
     // Postfix ++.
-    Iter operator++(int notused)
-    {
-        T *tmp = ptr;
-        ptr++;
-        return Iter<T>(tmp, begin, end);
-    }
+    Iter operator++(int notused);
+
     // Postfix --.
-    Iter operator--(int notused)
-    {
-        T *tmp = ptr;
-        ptr--;
-        return Iter<T>(tmp, begin, end);
-    }
+    Iter operator--(int notused);
+
     // Return a reference to the object at the
     // specified index. Do not allow out-of-bounds
     // access.
-    T &operator[](int i)
-    {
-        if ((i < 0) || (i >= (end - begin)))
-            throw OutOfRangeExc();
-        return ptr[i];
-    }
+    T &operator[](int i);
+
     // Define the relational operators.
-    bool operator==(Iter op2)
-    {
-        return ptr == op2.ptr;
-    }
-    bool operator!=(Iter op2)
-    {
-        return ptr != op2.ptr;
-    }
-    bool operator<(Iter op2)
-    {
-        return ptr < op2.ptr;
-    }
-    bool operator<=(Iter op2)
-    {
-        return ptr <= op2.ptr;
-    }
-    bool operator>(Iter op2)
-    {
-        return ptr > op2.ptr;
-    }
-    bool operator>=(Iter op2)
-    {
-        return ptr >= op2.ptr;
-    }
+    bool operator==(Iter op2);
+    bool operator!=(Iter op2);
+    bool operator<(Iter op2);
+    bool operator<=(Iter op2);
+    bool operator>(Iter op2);
+    bool operator>=(Iter op2);
+
     // Subtract an integer from an Iter.
-    Iter operator-(int n)
-    {
-        ptr -= n;
-        return *this;
-    }
+    Iter operator-(int n);
+
     // Add an integer to an Iter.
-    Iter operator+(int n)
-    {
-        ptr += n;
-        return *this;
-    }
+    Iter operator+(int n);
+
     // Return number of elements between two Iters.
-    int operator-(Iter<T> &itr2)
-    {
-        return ptr - itr2.ptr;
-    }
+    int operator-(Iter<T> &itr2);
 };
+
+#include "gc_iterator.hpp"
