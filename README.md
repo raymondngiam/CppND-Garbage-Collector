@@ -119,7 +119,7 @@ memPtr refcount value
 
 - Object `p2` is then assigned to two different heap `int` variables, `21` and `28`, sequentially. We observed that 2 memory addresses were appended to the `refContainer` list. The `refcount` for the items `19`, `21`, and `28` are now `1`, `0`, and `1`, respectively. Item `19` is now referenced by `Pointer<int>` object `p`, and item `28` is now referenced by `p2`.
 
-- Next, when program exit the scope for object `p2`, we observed that items `21`, and `28` were removed from the `refContainer` list, as the destructor for the `Pointer<int>` object is executed and the heap memory is released.
+- Next, when program exit the scope for object `p2`, we observed that items `21`, and `28` were removed from the `refContainer` list. This is due to the destructor for the `Pointer<int>` object was executed thus the heap memory was released for any references that has `refcount` = `0`.
 
 - Finally, when program exit the scope for object `p1`, we observed that item `19` was also removed from the `refContainer` list.
 
