@@ -95,7 +95,7 @@ bool Pointer<T, size>::collect(){
 
 // Overload assignment of pointer to Pointer.
 template <class T, int size>
-T* Pointer<T, size>::operator=(T* t){
+Pointer<T, size>& Pointer<T, size>::operator=(T* t){
 
     // TODO: Implement operator==
     // LAB: Smart Pointer Project Lab
@@ -109,11 +109,8 @@ T* Pointer<T, size>::operator=(T* t){
         PtrDetails<T> new_item(t, size);
         refContainer.push_back(new_item); 
     }
-        
-    //std::cout << "#debug the refcount of current: " << p->refcount << std::endl;
-    //std::cout << "#debug refContainer size is: " << refContainerSize() << std::endl;
     this->addr = t;
-    return addr;
+    return *this;
 }
 // Overload assignment of Pointer to Pointer.
 template <class T, int size>

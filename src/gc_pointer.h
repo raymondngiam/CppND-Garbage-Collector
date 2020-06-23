@@ -51,7 +51,7 @@ public:
     // one object was freed.
     static bool collect();
     // Overload assignment of pointer to Pointer.
-    T* operator=(T* t);
+    Pointer& operator=(T* t);
     // Overload assignment of Pointer to Pointer.
     Pointer& operator=(Pointer& rv);
     // Return a reference to the object pointed
