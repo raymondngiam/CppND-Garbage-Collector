@@ -1,4 +1,5 @@
 # CppND-Garbage-Collector
+
 The final project for this Memory Management course is to implement your own
 version of a smart pointer. You can think of this as implementing your own
 garbage collector, to use a concept from other programming languages. Building
@@ -7,22 +8,39 @@ references, and also why smart pointers are so important to modern C++
 programming. Complete the implementations and verify that your implementation
 does not have any memory leaks!
 
-# Building
-To build this project, you will need a C++ compiler. The `make` script provided
-assumes the GCC compiler, however you may substitute an equivalent C++ compiler
-by adjusting the `make` script as needed. Execute the make script, then run the
-compiled executable.
+# Dependencies
 
-If the code fails to compile, the execute won't be created or will remain the
-last-compiled version. Adjust your code to resolve compiler errors and try again.
+- cmake >= 3.18
+- make >= 4.1
+- g++ >= 7.5
+
+
+# Building
+
+The main program can be built and run by doing the following from the project top directory.
 
 ``` shell
-$ ./make
-$ ./compiled
+$ mkdir build && cd build
+$ cmake .. -DCMAKE_BUILD_TYPE=Release
+$ make -j2 
+$ ../bin/main
 ```
 
-## Project TODO List:
-- Complete `Pointer` constructor
-- Complete `Pointer` `operator==`
-- Complete `Pointer` destructor
-- Complete `PtrDetails` class
+## Output:
+
+```
++---------------+
+| FINAL REPORT: |
++---------------+
+
+Total number of allocations: 6
+Total number of deallocations: 6
+Total number of allocations in bytes: 132
+Total number of deallocations in bytes: 132
+Maximum memory occupation during runtime in bytes: 132
+Memory occupation upon completion: 0
+
+
+GREAT JOB! YOU DO NOT HAVE MEMORY LEAKAGE
+```
+
