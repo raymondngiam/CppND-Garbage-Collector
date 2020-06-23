@@ -65,6 +65,9 @@ int main()
     // end of scope 1: Pointer p1 should be disposed
     std::cout<<"end of scope 1"<<std::endl;
     Pointer<int>::showlist();
+
+    return 0;
+}
 ```
 
 ### Output
