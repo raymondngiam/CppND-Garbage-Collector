@@ -26,7 +26,7 @@ $ make -j2
 $ ../bin/main
 ```
 
-# Example usage
+# Example usage 1 - Non array
 
 ```
 #include "gc_pointer.h"
@@ -34,8 +34,6 @@ $ ../bin/main
 
 int main()
 {
-    std::cout<<"Non array example:"<<std::endl;
-    std::cout<<"=================="<<std::endl;
     auto ptr1 = new int(19);
     auto ptr2 = new int(21);
     auto ptr3 = new int(28);
@@ -67,9 +65,59 @@ int main()
     // end of scope 1: Pointer p1 should be disposed
     std::cout<<"end of scope 1"<<std::endl;
     Pointer<int>::showlist();
+```
 
-    std::cout<<"Array example:"<<std::endl;
-    std::cout<<"=============="<<std::endl;
+### Output
+
+```
+ctor
+refContainer<i, 0>:
+memPtr refcount value
+ [0x55f2fbe4d280] 1  19
+
+copy constructor
+refContainer<i, 0>:
+memPtr refcount value
+ [0x55f2fbe4d280] 2  19
+
+assignment of pointer to Pointer
+refContainer<i, 0>:
+memPtr refcount value
+ [0x55f2fbe4d280] 1  19
+[0x55f2fbe4d2d0] 0  21
+[0x55f2fbe4d320] 1  28
+
+end of scope 2
+refContainer<i, 0>:
+memPtr refcount value
+ [0x55f2fbe4d320] 1  28
+
+end of scope 1
+refContainer<i, 0>:
+memPtr refcount value
+  Container is empty!
+```
+
+### Brief walkthrough
+
+- Here a `Pointer<int>` object, `p` is instantiated via constructor by inputting address of a heap `int` variable. We observed that a memory address is added to the `refContainer` list of the `Pointer<int>` class, with `refcount` = `1`, and `value` = `19`.
+
+- When object `p2` is instantiated by a copy of `p`, the existing item in `Pointer<int>` class's `refContainer` list with `value` = `19`, has its `refcount` incremented by 1. This means that there are two `Pointer<int>` objects (`p` and `p2`) are referencing to this `int` variable address.
+
+- Object `p2` is then assigned to two different heap `int` variables, `21` and `28`, sequentially. We observed that 2 memory addresses were appended to the `refContainer` list. The `refcount` for the items `19`, `21`, and `28` are now `1`, `0`, and `1`, respectively. Item `19` is now referenced by `Pointer<int>` object `p`, and item `28` is now referenced by `p2`.
+
+- Next, when program exit the scope for object `p2`, we observed that items `21`, and `28` were removed from the `refContainer` list, as the destructor for the `Pointer<int>` object is executed and the heap memory is released.
+
+- Finally, when program exit the scope for object `p1`, we observed that item `19` was also removed from the `refContainer` list.
+
+# Example usage 2 - Array
+
+```
+#include "gc_pointer.h"
+#include "LeakTester.h"
+
+int main()
+{
     const int size = 3;
     auto ptr4 = new std::string[size]{"abc","def","ghi"};
 
@@ -98,41 +146,9 @@ int main()
 }
 ```
 
-# Output:
+### Output:
 
 ```
-Non array example:
-==================
-ctor
-refContainer<i, 0>:
-memPtr refcount value
- [0x55f2fbe4d280] 1  19
-
-copy constructor
-refContainer<i, 0>:
-memPtr refcount value
- [0x55f2fbe4d280] 2  19
-
-assignment of pointer to Pointer
-refContainer<i, 0>:
-memPtr refcount value
- [0x55f2fbe4d280] 1  19
-[0x55f2fbe4d2d0] 0  21
-[0x55f2fbe4d320] 1  28
-
-end of scope 2
-refContainer<i, 0>:
-memPtr refcount value
- [0x55f2fbe4d320] 1  28
-
-end of scope 1
-refContainer<i, 0>:
-memPtr refcount value
-  Container is empty!
-
- 
-Array example:
-==============
 ctor
 refContainer<NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE, 3>:
 memPtr refcount value
@@ -150,23 +166,16 @@ end of scope 1
 refContainer<NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE, 3>:
 memPtr refcount value
   Container is empty!
-
- 
-
-
-+---------------+
-| FINAL REPORT: |
-+---------------+
-
-Total number of allocations: 8
-Total number of deallocations: 8
-Total number of allocations in bytes: 276
-Total number of deallocations in bytes: 276
-Maximum memory occupation during runtime in bytes: 144
-Memory occupation upon completion: 0
-
-
-GREAT JOB! YOU DO NOT HAVE MEMORY LEAKAGE
-
 ```
+
+### Brief walkthrough
+
+- Here, a string array is instantiated from heap using the `new` keyword, and is used to instantiate a `Pointer<std::string,size>` object, `p3`.
+
+- The `refContainer` list of the `Pointer<std::string,size>` class was registered with an entry of memory address.
+
+- The content of the array can be accessed via `for loop` with `iterator` from the `Pointer<std::string,size>` class.
+
+- Finally, when program exit the scope for object `p3`, we observed that item registered was removed from the `refContainer` list.
+
 
