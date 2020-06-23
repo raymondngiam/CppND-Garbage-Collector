@@ -19,9 +19,12 @@ array, then arraySize contains its size */
     // If this is an array, then size specifies
     // the size of the array.
 
+    // ctor
+    // implementation is declared in .h instead of .hpp, due to
+    // redeclaration of class funtion may not have default arguments
     PtrDetails(T *m_ptr, unsigned size = 0)
     {
-        // TODO: Implement PtrDetails
+        // TODO: Implement PtrDetails ctor
         refcount = 1;
         memPtr = m_ptr;
         if (size != 0) isArray = true;
@@ -30,12 +33,5 @@ array, then arraySize contains its size */
         arraySize = size;
     }
 };
-// Overloading operator== allows two class objects to be compared.
-// This is needed by the STL list class.
-template <class T>
-bool operator==(const PtrDetails<T> &ob1,
-                const PtrDetails<T> &ob2)
-{
-    // TODO: Implement operator==
-    return (ob1.memPtr == ob2.memPtr);
-}
+
+#include "gc_details.hpp"
