@@ -1,3 +1,4 @@
+#pragma once
 // This class defines an element that is stored
 // in the garbage collection information list.
 //
