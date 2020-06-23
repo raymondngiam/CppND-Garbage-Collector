@@ -22,12 +22,16 @@ int main()
             Pointer<int> p2(p);
             std::cout<<"copy constructor"<<std::endl;
             Pointer<int>::showlist();
+            std::cout<<"p: "<<p<<std::endl;
+            std::cout<<"p2: "<<p2<<std::endl<<std::endl;
 
             //assignment of pointer to Pointer
-            p = ptr2;
-            p = ptr3;
+            p2 = ptr2;
+            p2 = ptr3;
             std::cout<<"assignment of pointer to Pointer"<<std::endl;
             Pointer<int>::showlist();
+            std::cout<<"p: "<<p<<std::endl;
+            std::cout<<"p2: "<<p2<<std::endl<<std::endl;
         }
         // end of scope 2: Pointer p2 should be disposed
         std::cout<<"end of scope 2"<<std::endl;

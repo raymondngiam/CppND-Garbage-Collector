@@ -32,14 +32,13 @@ $ ../bin/main
 #include "gc_pointer.h"
 #include "LeakTester.h"
 
-int main()
-{
+int main() {
     auto ptr1 = new int(19);
     auto ptr2 = new int(21);
     auto ptr3 = new int(28);
     
     // scope 1
-    if (true){
+    if (true) {
         //ctor
         Pointer<int> p(ptr1);
         std::cout<<"ctor"<<std::endl;
@@ -51,12 +50,16 @@ int main()
             Pointer<int> p2(p);
             std::cout<<"copy constructor"<<std::endl;
             Pointer<int>::showlist();
+            std::cout<<"p: "<<p<<std::endl;
+            std::cout<<"p2: "<<p2<<std::endl<<std::endl;
 
             //assignment of pointer to Pointer
-            p = ptr2;
-            p = ptr3;
+            p2 = ptr2;
+            p2 = ptr3;
             std::cout<<"assignment of pointer to Pointer"<<std::endl;
             Pointer<int>::showlist();
+            std::cout<<"p: "<<p<<std::endl;
+            std::cout<<"p2: "<<p2<<std::endl<<std::endl;
         }
         // end of scope 2: Pointer p2 should be disposed
         std::cout<<"end of scope 2"<<std::endl;
@@ -76,29 +79,36 @@ int main()
 ctor
 refContainer<i, 0>:
 memPtr refcount value
- [0x55f2fbe4d280] 1  19
+[0x55c2de4a7280] 1  19
 
 copy constructor
 refContainer<i, 0>:
 memPtr refcount value
- [0x55f2fbe4d280] 2  19
+[0x55c2de4a7280] 2  19
+
+p: 0x55c2de4a7280
+p2: 0x55c2de4a7280
 
 assignment of pointer to Pointer
 refContainer<i, 0>:
 memPtr refcount value
- [0x55f2fbe4d280] 1  19
-[0x55f2fbe4d2d0] 0  21
-[0x55f2fbe4d320] 1  28
+[0x55c2de4a7280] 1  19
+[0x55c2de4a72d0] 0  21
+[0x55c2de4a7320] 1  28
+
+p: 0x55c2de4a7280
+p2: 0x55c2de4a7320
 
 end of scope 2
 refContainer<i, 0>:
 memPtr refcount value
- [0x55f2fbe4d320] 1  28
+[0x55c2de4a7280] 1  19
 
 end of scope 1
 refContainer<i, 0>:
 memPtr refcount value
   Container is empty!
+
 ```
 
 ### Brief walkthrough
