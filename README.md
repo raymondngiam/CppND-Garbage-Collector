@@ -28,7 +28,7 @@ $ ../bin/main
 
 # Example usage 1 - Non array
 
-```
+``` cpp
 #include "gc_pointer.h"
 #include "LeakTester.h"
 
@@ -125,7 +125,7 @@ memPtr refcount value
 
 # Example usage 2 - Array
 
-```
+``` cpp
 #include "gc_pointer.h"
 #include "LeakTester.h"
 
